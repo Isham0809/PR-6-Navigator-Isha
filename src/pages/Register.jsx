@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 
 function Register() {
@@ -85,7 +85,7 @@ function Register() {
         </form>
 
         <div className="mt-3 text-center">
-          <p>Already have an account? <a href="/login" className="text-success">Login</a></p>
+          <p>Already have an account? <Link to="/login" className="text-success">Login</Link></p>
         </div>
       </div>
     </div>
