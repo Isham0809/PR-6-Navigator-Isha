@@ -67,4 +67,5 @@ Logout
     - Users can log out securely, which invalidates their session token.
     - Redirects to the home or login page after logout.
 
-# Working
+# Working Video
+[screen-capture.webm](https://github.com/user-attachments/assets/07abed0e-7341-417e-b990-eafcb12e6827)
