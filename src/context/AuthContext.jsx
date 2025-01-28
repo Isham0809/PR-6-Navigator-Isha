@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
     return savedUser ? JSON.parse(savedUser) : null;
   });
 
+  
   const [users, setUsers] = useState(() => {
     const savedUsers = localStorage.getItem("users");
     return savedUsers ? JSON.parse(savedUsers) : [];
@@ -18,7 +19,9 @@ export const AuthProvider = ({ children }) => {
 
   // Register new user
   const register = async (email, password) => {
-    const userExists = users.find((u) => u.email === email);
+    const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
+
+    const userExists = savedUsers.find((u) => u.email === email);
     if (userExists) {
       throw new Error("User already exists");
     }
@@ -29,19 +32,19 @@ export const AuthProvider = ({ children }) => {
       password,
     };
 
-    const updatedUsers = [...users, newUser];
+    const updatedUsers = [...savedUsers, newUser];
 
-    setUsers(updatedUsers);
     localStorage.setItem("users", JSON.stringify(updatedUsers));
+    setUsers(updatedUsers);
 
-    const userWithoutPassword = { id: newUser.id, email: newUser.email };
-    setUser(userWithoutPassword);
-    localStorage.setItem("user", JSON.stringify(userWithoutPassword));
+    // Do NOT log in the user automatically after registration
   };
 
   // Login existing user
   const login = async (email, password) => {
-    const foundUser = users.find(
+    const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
+
+    const foundUser = savedUsers.find(
       (u) => u.email === email && u.password === password
     );
 
@@ -63,13 +66,6 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem("user");
   };
-
-  // Persist user authentication state to the localStorage on mount
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    }
-  }, [user]);
 
   return (
     <AuthContext.Provider value={{ user, isAuthenticated, register, login, logout }}>

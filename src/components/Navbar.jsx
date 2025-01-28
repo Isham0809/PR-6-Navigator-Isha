@@ -1,14 +1,13 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; 
 
 function Navbar() {
-  const { isAuthenticated, logout } = useAuth();
-  const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth(); 
 
   const handleLogout = () => {
-    logout(); // Clear authentication state
-    navigate("/"); // Redirect to the dashboard
+    logout();
+    navigate("/");
   };
 
   return (
@@ -29,8 +28,8 @@ function Navbar() {
           <span className="navbar-toggler-icon" />
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
-            {isAuthenticated ? (
+          <ul className="navbar-nav ms-auto align-items-center">
+            {isAuthenticated && (
               <>
                 <li className="nav-item">
                   <NavLink
@@ -57,9 +56,9 @@ function Navbar() {
                     className={({ isActive }) =>
                       `nav-link ${isActive ? "active fw-semibold" : ""}`
                     }
-                    to="/products"
+                    to="/contact"
                   >
-                    Products
+                    Contact
                   </NavLink>
                 </li>
                 <li className="nav-item">
@@ -67,18 +66,17 @@ function Navbar() {
                     className={({ isActive }) =>
                       `nav-link ${isActive ? "active fw-semibold" : ""}`
                     }
-                    to="/contact"
+                    to="/products"
                   >
-                    Contact
+                    Products
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <button className="nav-link" onClick={handleLogout}>
-                    Logout
-                  </button>
+                <button type="button" className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
                 </li>
               </>
-            ) : (
+            )}
+            {!isAuthenticated && (
               <>
                 <li className="nav-item">
                   <NavLink
@@ -93,7 +91,7 @@ function Navbar() {
                 <li className="nav-item">
                   <NavLink
                     className={({ isActive }) =>
-                      `nav-link ${isActive ? "active fw-semibold" : ""}`
+                      `nav-link ${isActive ? "active fw-semibold"  : ""}`
                     }
                     to="/login"
                   >
